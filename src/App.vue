@@ -12,9 +12,22 @@ const clickToClearAll = () => {
   inputDisplay.value = ''
   outDisplay.value = ''
 }
+// const calculate = () => {
+//   console.log(inputDisplay.value)
+//   outDisplay.value = evaluate(inputDisplay.value)
+// }
+
 const calculate = () => {
   console.log(inputDisplay.value)
-  outDisplay.value = evaluate(inputDisplay.value)
+  let processedExpression = inputDisplay.value
+  processedExpression = processedExpression.replace(/(\d|\))(?=(sin|cos|tan|log)\()/g, '$1*')
+  const functionCount = (processedExpression.match(/(sin\(|cos\(|tan\(|log\()/g) || []).length
+  const closingCount = (processedExpression.match(/\)/g) || []).length
+  const missingBrackets = functionCount - closingCount
+  if (missingBrackets > 0) {
+    processedExpression += ')'.repeat(missingBrackets)
+  }
+  outDisplay.value = evaluate(processedExpression)
 }
 
 const deleteLastDigit = () => {
@@ -34,7 +47,7 @@ const deleteLastDigit = () => {
       <button @click="clickToDisplay('pi')">π</button>
       <button @click="clickToDisplay('!')">x!</button>
       <button @click="clickToDisplay('exp')">e</button>
-      <button class="operator" @click="clickToDisplay('log')">log</button>
+      <button class="operator" @click="clickToDisplay('log(')">log</button>
       <button @click="clickToDisplay('(')">(</button>
       <button @click="clickToDisplay(')')">)</button>
       <button @click="deleteLastDigit()">⌫</button>
@@ -155,3 +168,50 @@ button {
   }
 }
 </style>
+
+<!-- <template>
+  <div>
+    <input v-model="expression" readonly />
+    <button @click="appendToExpression('sin(')">sin(</button>
+    <button @click="appendToExpression('cos(')">cos(</button>
+    <button @click="appendToExpression('tan(')">tan(</button>
+    <button @click="appendToExpression('log(')">log(</button>
+    <button v-for="num in digits" :key="num" @click="appendToExpression(num)">{{ num }}</button>
+    <button v-for="op in operators" :key="op" @click="appendToExpression(op)">{{ op }}</button>
+    <button @click="processExpression">=</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const expression = ref('')
+const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+const operators = ['+', '-', '*', '/', ')']
+
+const appendToExpression = (input) => {
+  expression.value += input
+}
+
+
+const processExpression = () => {
+  let processedExpression = expression.value
+
+  // Ensure multiplication (*) is added before functions if necessary
+  processedExpression = processedExpression.replace(/(\d|\))(?=(sin|cos|tan|log)\()/g, '$1*')
+
+  // Count occurrences of sin(, cos(, tan(, log(
+  const functionCount = (processedExpression.match(/(sin\(|cos\(|tan\(|log\()/g) || []).length
+  // Count existing closing brackets
+  const closingCount = (processedExpression.match(/\)/g) || []).length
+  // Add missing closing brackets
+  const missingBrackets = functionCount - closingCount
+
+  if (missingBrackets > 0) {
+    processedExpression += ')'.repeat(missingBrackets)
+  }
+
+  // Update the expression with the corrected format
+  expression.value = processedExpression
+}
+</script> -->
