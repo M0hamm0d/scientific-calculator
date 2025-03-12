@@ -18,16 +18,24 @@ const clickToClearAll = () => {
 // }
 
 const calculate = () => {
-  console.log(inputDisplay.value)
-  let processedExpression = inputDisplay.value
-  processedExpression = processedExpression.replace(/(\d|\))(?=(sin|cos|tan|log)\()/g, '$1*')
-  const functionCount = (processedExpression.match(/(sin\(|cos\(|tan\(|log\()/g) || []).length
-  const closingCount = (processedExpression.match(/\)/g) || []).length
-  const missingBrackets = functionCount - closingCount
-  if (missingBrackets > 0) {
-    processedExpression += ')'.repeat(missingBrackets)
+  try {
+    console.log(inputDisplay.value)
+    let processedExpression = inputDisplay.value
+    processedExpression = processedExpression.replace(/(\d|\))(?=(sin|cos|tan|log)\()/g, '$1*')
+    const functionCount = (processedExpression.match(/(sin\(|cos\(|tan\(|log\()/g) || []).length
+    const closingCount = (processedExpression.match(/\)/g) || []).length
+    const missingBrackets = functionCount - closingCount
+    if (missingBrackets > 0) {
+      processedExpression += ')'.repeat(missingBrackets)
+    }
+    if (inputDisplay.value === '!') {
+      processedExpression = '0!'
+    }
+    //do for raise to power also
+    outDisplay.value = evaluate(processedExpression)
+  } catch {
+    outDisplay.value = 'ERR'
   }
-  outDisplay.value = evaluate(processedExpression)
 }
 
 const deleteLastDigit = () => {
