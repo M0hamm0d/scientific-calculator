@@ -19,9 +19,9 @@ const clickToClearAll = () => {
 
 const calculate = () => {
   try {
-    console.log(inputDisplay.value)
     let processedExpression = inputDisplay.value
     processedExpression = processedExpression.replace(/(\d|\))(?=(sin|cos|tan|log)\()/g, '$1*')
+    processedExpression = processedExpression.replace(/(tan|cos|sin)\((\d+)/g, '$&deg')
     const functionCount = (processedExpression.match(/(sin\(|cos\(|tan\(|log\()/g) || []).length
     const closingCount = (processedExpression.match(/\)/g) || []).length
     const missingBrackets = functionCount - closingCount
@@ -65,7 +65,8 @@ const deleteLastDigit = () => {
       <!-- <button class="operator" @click="clickToDisplay('**')">²</button> -->
       <button @click="clickToDisplay(',')">,</button>
       <button @click="clickToDisplay('/')">÷</button>
-      <button class="operator" @click="clickToDisplay('pow(')">xʸ</button>
+      <button class="operator" @click="clickToDisplay('^')">xʸ</button>
+      <!-- <button class="operator" @click="clickToDisplay('pow(')">xʸ</button> -->
       <button @click="clickToDisplay('7')">7</button>
       <button @click="clickToDisplay('8')">8</button>
       <button @click="clickToDisplay('9')">9</button>
