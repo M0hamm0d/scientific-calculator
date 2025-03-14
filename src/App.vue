@@ -21,7 +21,6 @@ const calculate = () => {
   try {
     let processedExpression = inputDisplay.value
     processedExpression = processedExpression.replace(/(\d|\))(?=(sin|cos|tan|log)\()/g, '$1*')
-    processedExpression = processedExpression.replace(/(tan|cos|sin)\((\d+)/g, '$&deg')
     const functionCount = (processedExpression.match(/(sin\(|cos\(|tan\(|log\()/g) || []).length
     const closingCount = (processedExpression.match(/\)/g) || []).length
     const missingBrackets = functionCount - closingCount
@@ -32,6 +31,9 @@ const calculate = () => {
       processedExpression = '0!'
     }
     //do for raise to power also
+    // processedExpression = processedExpression.replace(/(tan|cos|sin)\((\d+)/g, '$&deg')
+    processedExpression = processedExpression.replace(/(sin|cos|tan)\((\d+)\)/g, '$1($2deg)')
+    console.log(processedExpression)
     outDisplay.value = evaluate(processedExpression)
   } catch {
     outDisplay.value = 'ERR'
