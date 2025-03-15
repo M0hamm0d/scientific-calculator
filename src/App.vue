@@ -30,7 +30,6 @@ const calculate = () => {
     if (inputDisplay.value === '!') {
       processedExpression = '0!'
     }
-    //do for raise to power also
     // processedExpression = processedExpression.replace(/(tan|cos|sin)\((\d+)/g, '$&deg')
     processedExpression = processedExpression.replace(/(sin|cos|tan)\((\d+)\)/g, '$1($2deg)')
     console.log(processedExpression)
