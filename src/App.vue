@@ -94,7 +94,6 @@ const deleteLastDigit = () => {
 }
 .container {
   margin: auto;
-  /* height: 498px; */
   min-width: 318px;
   max-width: 318px;
   background-color: #26313e;
@@ -102,9 +101,6 @@ const deleteLastDigit = () => {
 .input-in,
 .input-out {
   border: none;
-  /* display: flex;
-  justify-content: end; */
-  /* text-align: right; */
   direction: rtl;
   outline: none;
   padding: 2px 15px;
@@ -121,12 +117,10 @@ input::placeholder {
 }
 #input,
 #outputDisplay {
-  /* border: 1px solid black; */
   border: none;
   text-align: right;
   outline: none;
   padding: 5px 15px;
-  /* height: 193px; */
   width: 100%;
   font-size: 35px;
   color: white;
@@ -137,13 +131,11 @@ input::placeholder {
 .advanced-operators {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* gap: 1rem; */
   background-color: #26313e;
 }
 
 .the-keys {
   display: grid;
-  /* gap: .8rem; */
   grid-template-columns: repeat(4, 1fr);
   background-color: #26313e;
 }
