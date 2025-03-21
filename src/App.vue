@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { ref } from 'vue'
 import { evaluate } from 'mathjs'
 const inputDisplay = ref('')
@@ -165,5 +165,69 @@ button {
     width: 100%;
     height: 100%;
   }
+}
+</style> -->
+
+<script setup>
+import { ref, nextTick } from 'vue'
+
+const display = ref('') // Store display value
+const displayRef = ref(null) // Reference to the display container
+
+const addDigit = (digit) => {
+  display.value += digit
+
+  // Wait for Vue to update the DOM, then scroll
+  nextTick(() => {
+    if (displayRef.value) {
+      displayRef.value.scrollLeft = displayRef.value.scrollWidth
+    }
+  })
+}
+</script>
+
+<template>
+  <div class="calculator">
+    <div ref="displayRef" class="display">{{ display }}</div>
+    <div class="buttons">
+      <button v-for="n in 10" :key="n" @click="addDigit(n - 1)">
+        {{ n - 1 }}
+      </button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.calculator {
+  width: 200px;
+  margin: auto;
+  text-align: center;
+}
+
+.display {
+  width: 100%;
+  height: 40px;
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: right;
+  border: 1px solid #000;
+  padding: 5px;
+  scrollbar-width: none; /* For Firefox */
+}
+.display::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, Edge */
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 10px;
+}
+
+button {
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
 }
 </style>
