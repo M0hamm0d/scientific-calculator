@@ -182,6 +182,8 @@ const addDigit = (digit) => {
     if (displayRef.value) {
       displayRef.value.scrollLeft = displayRef.value.scrollWidth
     }
+    // console.log(displayRef.value.scrollLeft, displayRef.value.scrollWidth, displayRef.value)
+    console.log(displayRef.value)
   })
 }
 </script>
