@@ -1,22 +1,23 @@
-<!-- <script setup>
-import { ref } from 'vue'
+<script setup>
+import { ref, nextTick } from 'vue'
 import { evaluate } from 'mathjs'
 const inputDisplay = ref('')
+const inputDisplayRef = ref(null)
 const outDisplay = ref('')
 
 const clickToDisplay = (value) => {
   inputDisplay.value += value
+  nextTick(() => {
+    if (inputDisplayRef.value) {
+      inputDisplayRef.value.scrollLeft = inputDisplayRef.value.scrollWidth
+    }
+  })
 }
 
 const clickToClearAll = () => {
   inputDisplay.value = ''
   outDisplay.value = ''
 }
-// const calculate = () => {
-//   console.log(inputDisplay.value)
-//   outDisplay.value = evaluate(inputDisplay.value)
-// }
-
 const calculate = () => {
   try {
     let processedExpression = inputDisplay.value
@@ -30,12 +31,10 @@ const calculate = () => {
     if (inputDisplay.value === '!') {
       processedExpression = '0!'
     }
-    // processedExpression = processedExpression.replace(/(tan|cos|sin)\((\d+)/g, '$&deg')
     processedExpression = processedExpression.replace(/(sin|cos|tan)\((\d+)\)/g, '$1($2deg)')
-    console.log(processedExpression)
     outDisplay.value = evaluate(processedExpression)
   } catch {
-    outDisplay.value = 'error'
+    outDisplay.value = 'Error'
   }
 }
 
@@ -46,7 +45,14 @@ const deleteLastDigit = () => {
 
 <template>
   <div class="container">
-    <input v-model="inputDisplay" id="input" type="text" placeholder="" readonly />
+    <input
+      ref="inputDisplayRef"
+      v-model="inputDisplay"
+      id="input"
+      type="text"
+      placeholder=""
+      readonly
+    />
     <input v-model="outDisplay" id="outputDisplay" type="text" placeholder="" readonly />
     <div class="the-keys relative">
       <button class="operator" @click="clickToDisplay('sin(')">sin</button>
@@ -78,7 +84,8 @@ const deleteLastDigit = () => {
       <button @click="clickToDisplay('2')">2</button>
       <button @click="clickToDisplay('3')">3</button>
       <button class="operator" @click="clickToDisplay('+')">+</button>
-      <button @click="clickToDisplay('deg')">Deg</button>
+      <button>Deg</button>
+      <!-- <button @click="clickToDisplay('deg')">Deg</button> -->
       <button @click="clickToDisplay('0')">0</button>
       <button @click="clickToDisplay('.')">.</button>
       <button class="equals" @click="calculate()">=</button>
@@ -166,9 +173,9 @@ button {
     height: 100%;
   }
 }
-</style> -->
+</style>
 
-<script setup>
+<!-- <script setup>
 import { ref, nextTick } from 'vue'
 
 const display = ref('') // Store display value
@@ -232,4 +239,4 @@ button {
   height: 50px;
   font-size: 20px;
 }
-</style>
+</style> -->
